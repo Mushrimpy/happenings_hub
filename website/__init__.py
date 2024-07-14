@@ -5,39 +5,45 @@ from dotenv import load_dotenv
 from werkzeug.security import generate_password_hash
 import os
 
-load_dotenv()
 db = SQLAlchemy()
-DB_NAME = os.getenv("DB_NAME")
 
 
-def create_app():
+def create_app(config_class="config.Config"):
     app = Flask(__name__)
-    app.config.from_mapping(
-        SECRET_KEY=os.getenv("SECRET_KEY"),
-        SQLALCHEMY_DATABASE_URI=f"sqlite:///{DB_NAME}",
-        UPLOAD_FOLDER=os.path.join(app.instance_path, os.getenv("UPLOAD_FOLDER")),
+    app.config.from_object(config_class)  # Load configuration
+
+    # Configure upload folder
+    app.config["UPLOAD_FOLDER"] = os.path.join(
+        app.instance_path, app.config["UPLOAD_FOLDER"]
     )
-    db.init_app(app)
     os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 
+    # Initialize SQLAlchemy
+    db.init_app(app)
+
+    # Register blueprints
     from .views import views_bp
     from .auth import auth_bp
 
     app.register_blueprint(views_bp, url_prefix="/")
     app.register_blueprint(auth_bp, url_prefix="/auth/")
 
+    # Register error handlers
     from .errors import page_not_found
 
     app.register_error_handler(404, page_not_found)
 
+    # Initialize database
     from .models import User
 
     create_database(app)
 
+    # Initialize LoginManager
     login_manager = LoginManager()
     login_manager.login_view = "auth_bp.login"
     login_manager.init_app(app)
 
+    # User loader function
     @login_manager.user_loader
     def load_user(id):
         return User.query.get(int(id))
@@ -48,13 +54,14 @@ def create_app():
 def create_database(app):
     from .models import User
 
-    db_path = os.path.join(app.instance_path, DB_NAME)
+    db_path = os.path.join(app.instance_path, app.config["DB_NAME"])
     if not os.path.exists(db_path):
         with app.app_context():
             db.create_all()
             print("Database created")
             admin_user = User(
-                username="admin", password=generate_password_hash(os.getenv("ADMIN_PW"))
+                username="admin",
+                password=generate_password_hash(app.config["ADMIN_PW"]),
             )
             db.session.add(admin_user)
             db.session.commit()

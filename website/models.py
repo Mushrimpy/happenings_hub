@@ -42,7 +42,7 @@ class Activity(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
-    active = db.Column(
+    is_active = db.Column(
         db.Boolean, default=False
     )  # Added field to indicate if activity is active
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
