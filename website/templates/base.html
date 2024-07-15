@@ -43,6 +43,18 @@
           >
           <a
             class="nav-item nav-link"
+            id="followers"
+            href="{{ url_for('contacts_bp.followers') }}"
+            >Followers</a
+          >
+          <a
+            class="nav-item nav-link"
+            id="following"
+            href="{{ url_for('contacts_bp.following') }}"
+            >Following</a
+          >
+          <a
+            class="nav-item nav-link"
             id="logout"
             href="{{ url_for('auth_bp.logout') }}"
             >Logout</a

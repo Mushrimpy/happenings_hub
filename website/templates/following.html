@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="center">Following</h1>
+<br />
+<form method="POST">
+  <input
+    name="follow_req_username"
+    id="follow_req_username"
+    class="form-control"
+    placeholder="Enter username to follow"
+  />
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-primary">Add Friend</button>
+  </div>
+</form>
+
+<br />
+<ul class="list-group list-group-flush" id="notes">
+  {% for followed in user.following %}
+  <li class="list-group-item">{{ followed.username }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
