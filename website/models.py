@@ -1,5 +1,7 @@
 from . import db
 from flask_login import UserMixin
+from datetime import datetime
+
 
 followers = db.Table(
     "followers",
@@ -33,6 +35,18 @@ class User(db.Model, UserMixin):
 
     def is_followed_by(self, user):
         return self.followers.filter(followers.c.follower_id == user.id).count() > 0
+
+
+class FriendRequest(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+
+    sender = db.relationship("User", foreign_keys=[sender_id], backref="sent_requests")
+    receiver = db.relationship(
+        "User", foreign_keys=[receiver_id], backref="received_requests"
+    )
 
 
 class Activity(db.Model):

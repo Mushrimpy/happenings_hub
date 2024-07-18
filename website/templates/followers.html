@@ -1,15 +1,45 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Followers</h1>
+
 <br />
+
+{% if user.received_requests %}
+<ul class="list-group list-group-flush" id="pending">
+  <h3>Pending</h3>
+  {% for request in user.received_requests %}
+  <li class="list-group-item">
+    {{ request.sender.username }}
+    <button
+      type="button"
+      class="close"
+      onClick="declineRequest('{{request.id }}')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <button
+      type="button"
+      class="close"
+      onClick="acceptRequest('{{request.id }}')"
+      style="margin-right: 16pt"
+    >
+      <span aria-hidden="true">&check;</span>
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<br /><br />
+
 <ul class="list-group list-group-flush" id="followers">
+  <h3>Followers</h3>
   {% for follower in user.followers %}
   <li class="list-group-item">
     {{ follower.username }}
     <button
       type="button"
       class="close"
-      onClick="unfollowUser('{{follower.id }}')"
+      onClick="removeFollower('{{follower.id }}')"
     >
       <span aria-hidden="true">&times;</span>
     </button>

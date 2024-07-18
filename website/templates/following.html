@@ -1,8 +1,9 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
 %}
-<h1 align="center">Following</h1>
+<h2 align="center">Following</h2>
 <br />
 <form method="POST">
+  <label for="email">Username</label>
   <input
     name="follow_req_username"
     id="follow_req_username"
@@ -18,7 +19,17 @@
 <br />
 <ul class="list-group list-group-flush" id="notes">
   {% for followed in user.following %}
-  <li class="list-group-item">{{ followed.username }}</li>
+  <li class="list-group-item">
+    {{ followed.username }}
+    <button
+      type="button"
+      class="close"
+      onClick="unfollowUser('{{followed.id }}')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </li>
+
   {% endfor %}
 </ul>
 {% endblock %}

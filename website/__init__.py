@@ -23,11 +23,11 @@ def create_app(config_class="config.Config"):
     # Register blueprints
     from .views import views_bp
     from .auth import auth_bp
-    from .contacts import contacts_bp
+    from .friends import friends_bp
 
     app.register_blueprint(views_bp, url_prefix="/")
     app.register_blueprint(auth_bp, url_prefix="/auth/")
-    app.register_blueprint(contacts_bp, url_prefix="/contacts/")
+    app.register_blueprint(friends_bp, url_prefix="/friends/")
 
     # Register error handlers
     from .errors import page_not_found
@@ -35,7 +35,7 @@ def create_app(config_class="config.Config"):
     app.register_error_handler(404, page_not_found)
 
     # Initialize database
-    from .models import User
+    from .models import User, Activity, FriendRequest
 
     create_database(app)
 

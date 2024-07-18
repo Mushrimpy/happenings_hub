@@ -15,10 +15,6 @@
       crossorigin="anonymous"
     />
 
-    <!--<link
-      href="{{ url_for('static', filename='style.css') }}"
-      rel="stylesheet"
-    />-->
     <title>{% block title %} {% endblock %}</title>
   </head>
 
@@ -44,13 +40,13 @@
           <a
             class="nav-item nav-link"
             id="followers"
-            href="{{ url_for('contacts_bp.followers') }}"
+            href="{{ url_for('friends_bp.followers') }}"
             >Followers</a
           >
           <a
             class="nav-item nav-link"
             id="following"
-            href="{{ url_for('contacts_bp.following') }}"
+            href="{{ url_for('friends_bp.following') }}"
             >Following</a
           >
           <a
@@ -124,7 +120,7 @@
 
     <script
       type="text/javascript"
-      src="{{url_for('static', filename='script.js')}}"
+      src="{{url_for('static', filename='src/script.js')}}"
     ></script>
   </body>
 </html>
