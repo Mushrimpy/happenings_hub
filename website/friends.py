@@ -99,5 +99,5 @@ def unfollow():
     if followed and followed in current_user.following:
         current_user.following.remove(followed)
         db.session.commit()
-        flash(f"No longer following {followed.username} declined", category="success")
+        flash(f"No longer following {followed.username}", category="success")
     return jsonify({})
