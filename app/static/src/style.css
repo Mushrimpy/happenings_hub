@@ -1,0 +1,25 @@
+.pagination .page-item .page-link {
+  padding: 8px 24px;
+  border: 1px solid #dee2e6;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+  color: #0056b3; /* darker primary color */
+}
+
+.container {
+  transition: opacity 0.4s ease-in-out;
+  opacity: 0; /* Initially hidden */
+}
+
+.container.fade-in {
+  opacity: 1; /* Fade in effect */
+}

@@ -41,7 +41,7 @@ class FriendRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     sender_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     receiver_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
 
     sender = db.relationship("User", foreign_keys=[sender_id], backref="sent_requests")
     receiver = db.relationship(
@@ -52,11 +52,29 @@ class FriendRequest(db.Model):
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150), nullable=False)
+    category = db.Column(db.String(100), nullable=True)
     description = db.Column(db.Text, nullable=True)
-    timestamp = db.Column(db.DateTime, nullable=False)
+    visibility = db.Column(db.String(150), nullable=False)
+    is_goal = db.Column(db.String(50), nullable=False, default="False")
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    image_filename = db.Column(db.String(150), nullable=True)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
-    is_active = db.Column(
-        db.Boolean, default=False
-    )  # Added field to indicate if activity is active
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+
+"""
+class Goal(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    due_date = db.Column(db.DateTime, nullable=True)
+    image_filename = db.Column(db.String(150), nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
+    goal_status = db.Column(
+        db.String(20), nullable=False, default="pending"
+    )  # 'pending', 'success', 'failure'
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+"""

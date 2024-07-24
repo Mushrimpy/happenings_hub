@@ -49,10 +49,51 @@ function declineRequest(request_id) {
           event.preventDefault();
           event.stopPropagation();
         }
-
         form.classList.add("was-validated");
       },
       false
     );
   });
 })();
+
+$(document).ready(function () {
+  $(".container").addClass("fade-in");
+
+  $("a.page-link").on("click", function (event) {
+    event.preventDefault();
+    const linkLocation = this.href;
+
+    // Remove fade-in class and apply fade-out effect
+    $(".container").removeClass("fade-in");
+    $(".container").css("opacity", "0");
+    setTimeout(function () {
+      window.location = linkLocation;
+    }, 400);
+  });
+});
+
+// Button to clear image file name
+document
+  .getElementById("delete-file-button")
+  .addEventListener("click", function () {
+    document.getElementById("image_file").value = "";
+  });
+
+function handleSuccess(pos) {
+  document.getElementById("posLat").value = pos.coords.latitude;
+  document.getElementById("posLong").value = pos.coords.longitude;
+}
+
+function handleError() {
+  alert("Ensure location services are enabled");
+}
+
+function getPosition() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      handleSuccess(pos);
+    }, handleError);
+  } else {
+    alert("Geolocation is not supported this browser");
+  }
+}

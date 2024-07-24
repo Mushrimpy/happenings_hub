@@ -9,6 +9,14 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='src/style.css') }}"
+    />
 
     <title>{% block title %} {% endblock %}</title>
   </head>
@@ -27,20 +35,25 @@
         <ul class="navbar-nav me-auto mb-1 mb-lg-0">
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ url_for('views_bp.home') }}"
-              >Home</a
+            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.hub') }}"
+              >Hub</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.share') }}"
+              >Share</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.crew') }}"
+              >Crew</a
             >
           </li>
           <li class="nav-item">
             <a
               class="nav-link mx-2"
               href="{{ url_for('friends_bp.followers') }}"
-              >Followers</a
-            >
-          </li>
-          <li class="nav-item mx-2">
-            <a class="nav-link" href="{{ url_for('friends_bp.following') }}"
-              >Following</a
+              >Friends</a
             >
           </li>
           <li class="nav-item mx-2">
@@ -49,10 +62,10 @@
             >
           </li>
           {% else %}
-          <li class="nav-item">
+          <li class="nav-item mx-2">
             <a class="nav-link" href="{{ url_for('auth_bp.login') }}">Login</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item mx-2">
             <a class="nav-link" href="{{ url_for('auth_bp.sign_up') }}"
               >Sign-up</a
             >
@@ -103,6 +116,8 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script
       type="text/javascript"

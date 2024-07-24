@@ -21,11 +21,11 @@ def create_app(config_class="config.Config"):
     db.init_app(app)
 
     # Register blueprints
-    from .views import views_bp
+    from .happenings import happenings_bp
     from .auth import auth_bp
     from .friends import friends_bp
 
-    app.register_blueprint(views_bp, url_prefix="/")
+    app.register_blueprint(happenings_bp, url_prefix="/")
     app.register_blueprint(auth_bp, url_prefix="/auth/")
     app.register_blueprint(friends_bp, url_prefix="/friends/")
 
