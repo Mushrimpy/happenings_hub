@@ -1,19 +1,23 @@
 from flask import Blueprint, render_template, jsonify, request, flash
 from flask_login import login_required, current_user
-from . import db
-from .models import User, FriendRequest
+from .. import db
+from ..models import User, FriendRequest
 import json
 
-friends_bp = Blueprint("friends_bp", __name__)
+connections_bp = Blueprint(
+    "connections_bp",
+    __name__,
+    template_folder="templates",
+)
 
 
-@friends_bp.route("/followers")
+@connections_bp.route("/followers")
 @login_required
 def followers():
     return render_template("followers.html", user=current_user)
 
 
-@friends_bp.route("/following", methods=["GET", "POST"])
+@connections_bp.route("/following", methods=["GET", "POST"])
 @login_required
 def following():
     if request.method == "POST":
@@ -48,7 +52,7 @@ def following():
     return render_template("following.html", user=current_user)
 
 
-@friends_bp.route("/accept-request", methods=["POST"])
+@connections_bp.route("/accept-request", methods=["POST"])
 @login_required
 def accept_request():
     follow_req = json.loads(request.data)
@@ -63,7 +67,7 @@ def accept_request():
     return jsonify({})
 
 
-@friends_bp.route("/decline-request", methods=["POST"])
+@connections_bp.route("/decline-request", methods=["POST"])
 @login_required
 def decline_request():
     follow_req = json.loads(request.data)
@@ -77,7 +81,7 @@ def decline_request():
     return jsonify({})
 
 
-@friends_bp.route("/remove-follower", methods=["POST"])
+@connections_bp.route("/remove-follower", methods=["POST"])
 @login_required
 def remove_follower():
     remove_follower_req = json.loads(request.data)
@@ -90,7 +94,7 @@ def remove_follower():
     return jsonify({})
 
 
-@friends_bp.route("/unfollow", methods=["POST"])
+@connections_bp.route("/unfollow", methods=["POST"])
 @login_required
 def unfollow():
     unfollow_req = json.loads(request.data)

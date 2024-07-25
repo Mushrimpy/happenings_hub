@@ -1,21 +1,19 @@
 from flask import Blueprint, render_template, jsonify, request, flash
 from flask_login import login_required, current_user
-from . import db
-from .models import User, Activity
-from .utils import CATEGORY_KEYS
+from .. import db
+from ..models import User, Activity
+from ..utils import CATEGORY_KEYS
 from datetime import datetime
 
 
-happenings_bp = Blueprint("happenings_bp", __name__)
+post_bp = Blueprint(
+    "post_bp",
+    __name__,
+    template_folder="templates",
+)
 
 
-@happenings_bp.route("/", methods=["GET", "POST"])
-@login_required
-def hub():
-    return render_template("hub.html", user=current_user)
-
-
-@happenings_bp.route("/share", methods=["GET", "POST"])
+@post_bp.route("/share", methods=["GET", "POST"])
 @login_required
 def share():
     if request.method == "POST":
@@ -35,7 +33,7 @@ def share():
     return render_template("share.html", user=current_user, categories=CATEGORY_KEYS)
 
 
-@happenings_bp.route("/crew", methods=["GET", "POST"])
+@post_bp.route("/review", methods=["GET", "POST"])
 @login_required
-def crew():
-    return render_template("crew.html", user=current_user)
+def review():
+    return render_template("review.html", user=current_user)

@@ -21,13 +21,16 @@ def create_app(config_class="config.Config"):
     db.init_app(app)
 
     # Register blueprints
-    from .happenings import happenings_bp
-    from .auth import auth_bp
-    from .friends import friends_bp
+    from .home.routes import home_bp
+    from .auth.routes import auth_bp
+    from .connections.routes import connections_bp
+    from .post.routes import post_bp
 
-    app.register_blueprint(happenings_bp, url_prefix="/")
+
+    app.register_blueprint(home_bp, url_prefix="/")
     app.register_blueprint(auth_bp, url_prefix="/auth/")
-    app.register_blueprint(friends_bp, url_prefix="/friends/")
+    app.register_blueprint(connections_bp, url_prefix="/connections/")
+    app.register_blueprint(post_bp, url_prefix="/post/")
 
     # Register error handlers
     from .errors import page_not_found

@@ -2,6 +2,18 @@
 %}
 
 <br />
+
+<nav aria-label="post-pagination">
+  <ul class="pagination justify-content-center mb-5">
+    <li class="page-item active">
+      <a class="page-link" href="{{ url_for('post_bp.share') }}">Share</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="{{ url_for('post_bp.review') }}">Review</a>
+    </li>
+  </ul>
+</nav>
+
 <form
   class="p-4 border border-2 rounded-4 mb-5 needs-validation"
   novalidate

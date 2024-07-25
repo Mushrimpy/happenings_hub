@@ -1,35 +1,35 @@
 function removeFollower(follower_id) {
-  fetch("/friends/remove-follower", {
+  fetch("/connections/remove-follower", {
     method: "POST",
     body: JSON.stringify({ follower_id: follower_id }),
   }).then((_res) => {
-    window.location.href = "/friends/followers";
+    window.location.href = "/connections/followers";
   });
 }
 
 function unfollowUser(followed_id) {
-  fetch("/friends/unfollow", {
+  fetch("/connections/unfollow", {
     method: "POST",
     body: JSON.stringify({ followed_id: followed_id }),
   }).then((_res) => {
-    window.location.href = "/friends/following";
+    window.location.href = "/connections/following";
   });
 }
 function acceptRequest(request_id) {
-  fetch("/friends/accept-request", {
+  fetch("/connections/accept-request", {
     method: "POST",
     body: JSON.stringify({ request_id: request_id }),
   }).then((_res) => {
-    window.location.href = "/friends/followers";
+    window.location.href = "/connections/followers";
   });
 }
 
 function declineRequest(request_id) {
-  fetch("/friends/decline-request", {
+  fetch("/connections/decline-request", {
     method: "POST",
     body: JSON.stringify({ request_id: request_id }),
   }).then((_res) => {
-    window.location.href = "/friends/followers";
+    window.location.href = "/connections/followers";
   });
 }
 

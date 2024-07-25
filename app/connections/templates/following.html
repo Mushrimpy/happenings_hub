@@ -3,15 +3,17 @@ content %}
 
 <br />
 
-<nav aria-label="friends-pagination">
+<nav aria-label="connections-pagination">
   <ul class="pagination justify-content-center mb-5">
     <li class="page-item">
-      <a class="page-link" href="{{ url_for('friends_bp.followers') }}"
+      <a class="page-link" href="{{ url_for('connections_bp.followers') }}"
         >Followers</a
       >
     </li>
     <li class="page-item">
-      <a class="page-link active" href="{{ url_for('friends_bp.following') }}"
+      <a
+        class="page-link active"
+        href="{{ url_for('connections_bp.following') }}"
         >Following</a
       >
     </li>

@@ -35,24 +35,19 @@
         <ul class="navbar-nav me-auto mb-1 mb-lg-0">
           {% if user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.hub') }}"
-              >Hub</a
+            <a class="nav-link mx-2" href="{{ url_for('home_bp.hub') }}"
+              >Happenings</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.share') }}"
-              >Share</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mx-2" href="{{ url_for('happenings_bp.crew') }}"
-              >Crew</a
+            <a class="nav-link mx-2" href="{{ url_for('post_bp.share') }}"
+              >Post</a
             >
           </li>
           <li class="nav-item">
             <a
               class="nav-link mx-2"
-              href="{{ url_for('friends_bp.followers') }}"
+              href="{{ url_for('connections_bp.followers') }}"
               >Friends</a
             >
           </li>

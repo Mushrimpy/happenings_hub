@@ -58,8 +58,8 @@ class Activity(db.Model):
     is_goal = db.Column(db.String(50), nullable=False, default="False")
     timestamp = db.Column(db.DateTime, default=datetime.now)
     image_filename = db.Column(db.String(150), nullable=True)
-    latitude = db.Column(db.Float, nullable=True)
-    longitude = db.Column(db.Float, nullable=True)
+    latitude = db.Column(db.String(50), nullable=True)
+    longitude = db.Column(db.String(50), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
 
