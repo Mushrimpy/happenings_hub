@@ -23,3 +23,7 @@
 .container.fade-in {
   opacity: 1; /* Fade in effect */
 }
+
+.text-muted {
+  font-weight: 400;
+}

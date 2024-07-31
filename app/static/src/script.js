@@ -1,3 +1,21 @@
+function archiveActivity(activity_id) {
+  fetch("/post/archive-activity", {
+    method: "POST",
+    body: JSON.stringify({ activity_id: activity_id }),
+  }).then((_res) => {
+    window.location.href = "/post/review";
+  });
+}
+
+function deleteActivity(activity_id) {
+  fetch("/post/delete-activity", {
+    method: "POST",
+    body: JSON.stringify({ activity_id: activity_id }),
+  }).then((_res) => {
+    window.location.href = "/post/review";
+  });
+}
+
 function removeFollower(follower_id) {
   fetch("/connections/remove-follower", {
     method: "POST",
@@ -94,6 +112,6 @@ function getPosition() {
       handleSuccess(pos);
     }, handleError);
   } else {
-    alert("Geolocation is not supported this browser");
+    alert("Geolocation is not supported by this browser");
   }
 }

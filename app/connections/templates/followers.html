@@ -1,48 +1,42 @@
 {% extends "base.html" %} {% block title %}Followers{% endblock %} {% block
 content %}
 
-<br />
 
 <nav aria-label="connections-pagination">
   <ul class="pagination justify-content-center mb-5">
     <li class="page-item active">
-      <a class="page-link" href="{{ url_for('connections_bp.followers') }}"
-        >Followers</a
-      >
+      <a class="page-link" href="{{ url_for('connections_bp.followers') }}">Followers</a>
     </li>
     <li class="page-item">
-      <a class="page-link" href="{{ url_for('connections_bp.following') }}"
-        >Following</a
-      >
+      <a class="page-link" href="{{ url_for('connections_bp.following') }}">Following</a>
     </li>
   </ul>
 </nav>
 
 {% if user.received_requests %}
-<div class="p-4 border border-2 rounded-4 mb-5">
-  <h3 class="mb-3 mx-2">Pending</h3>
-  {% for request in user.received_requests %}
+<div class="p-4 border border-1 rounded-4 mb-5">
+  <h4 class="mb-3 mx-2">Pending</h4>
+  {% for request in follow_requests %}
   <ul class="list-group list-group-flush" id="pending">
-    <li
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      {{ request.sender.username }}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      @{{ request.sender.username }}
       <div>
-        <button
-          type="button"
-          class="btn btn-lg p-1 mx-3"
-          onClick="acceptRequest('{{ request.id }}')"
-          aria-label="Accept"
-        >
-          <span aria-hidden="true">&check;</span>
-        </button>
-        <button
-          type="button"
-          class="btn btn-lg p-1"
-          onClick="declineRequest('{{ request.id }}')"
-          aria-label="Decline"
-        >
-          <span aria-hidden="true">&times;</span>
+        <button type="button" class="btn btn-outline-success mx-4" onClick="acceptRequest('{{ request.id }}')"
+          aria-label="Accept Follow Request">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2"
+            viewBox="0 0 16 16">
+            <path
+              d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
+          </svg> </button>
+        <button type="button" class="btn btn-outline-danger" onClick="declineRequest('{{ request.id }}')"
+          aria-label="Decline Follow Request">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+            viewBox="0 0 16 16">
+            <path
+              d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+            <path
+              d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+          </svg>
         </button>
       </div>
     </li>
@@ -52,21 +46,21 @@ content %}
 </div>
 {% endif %}
 
-<div class="p-4 border border-2 rounded-4 mb-5">
-  <h3 class="mb-3 mx-2">Followers</h3>
+<div class="p-4 border border-1 rounded-4 mb-5">
+  <h4 class="mb-3 mx-2">Followers</h4>
   <ul class="list-group list-group-flush" id="followers">
-    {% for follower in user.followers %}
-    <li
-      class="list-group-item d-flex justify-content-between align-items-center"
-    >
-      {{ follower.username }}
-      <button
-        type="button"
-        class="btn btn-lg p-1"
-        onClick="removeFollower('{{ follower.id }}')"
-        aria-label="Remove"
-      >
-        <span aria-hidden="true">&times;</span>
+    {% for follower in followers %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      @{{ follower.username }}
+      <button type="button" class="btn btn-outline-danger" onClick="removeFollower('{{ follower.id }}')"
+        aria-label="Remove Follower">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
+          viewBox="0 0 16 16">
+          <path
+            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+          <path
+            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+        </svg>
       </button>
     </li>
     {% endfor %}

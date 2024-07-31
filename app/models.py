@@ -14,12 +14,15 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
-    active_activity = db.relationship(
+    current_activity_id = db.Column(
+        db.Integer, db.ForeignKey("activity.id"), nullable=True
+    )
+    current_activity = db.relationship(
         "Activity",
         uselist=False,
-        backref="author",
+        backref="current_user",
         lazy=True,
-        foreign_keys="Activity.user_id",
+        foreign_keys=[current_activity_id],
     )
     following = db.relationship(
         "User",
@@ -51,30 +54,22 @@ class FriendRequest(db.Model):
 
 class Activity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(150), nullable=False)
-    category = db.Column(db.String(100), nullable=True)
+    title = db.Column(db.String(50), nullable=False)
+    category = db.Column(db.String(20), nullable=True)
     description = db.Column(db.Text, nullable=True)
-    visibility = db.Column(db.String(150), nullable=False)
-    is_goal = db.Column(db.String(50), nullable=False, default="False")
+    visibility = db.Column(db.String(20), nullable=False)
+    is_goal = db.Column(db.String(20), nullable=False, default="False")
     timestamp = db.Column(db.DateTime, default=datetime.now)
     image_filename = db.Column(db.String(150), nullable=True)
     latitude = db.Column(db.String(50), nullable=True)
     longitude = db.Column(db.String(50), nullable=True)
+    is_archived = db.Column(db.Boolean, default=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    user = db.relationship("User", backref="activities", foreign_keys=[user_id])
 
 
 """
-class Goal(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(150), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    timestamp = db.Column(db.DateTime, default=datetime.now)
-    due_date = db.Column(db.DateTime, nullable=True)
-    image_filename = db.Column(db.String(150), nullable=True)
-    latitude = db.Column(db.Float, nullable=True)
-    longitude = db.Column(db.Float, nullable=True)
     goal_status = db.Column(
         db.String(20), nullable=False, default="pending"
     )  # 'pending', 'success', 'failure'
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 """

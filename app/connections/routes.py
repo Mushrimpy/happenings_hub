@@ -14,7 +14,12 @@ connections_bp = Blueprint(
 @connections_bp.route("/followers")
 @login_required
 def followers():
-    return render_template("followers.html", user=current_user)
+    return render_template(
+        "followers.html",
+        user=current_user,
+        followers=current_user.followers[::-1],
+        follow_requests=current_user.received_requests[::-1],
+    )
 
 
 @connections_bp.route("/following", methods=["GET", "POST"])
@@ -49,7 +54,9 @@ def following():
         else:
             flash("User not found", category="error")
 
-    return render_template("following.html", user=current_user)
+    return render_template(
+        "following.html", user=current_user, following=current_user.following[::-1]
+    )
 
 
 @connections_bp.route("/accept-request", methods=["POST"])
