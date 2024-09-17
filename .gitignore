@@ -1,4 +1,39 @@
+# Node.js
+node_modules/
+.pnp/
+.pnp.js
+.yarn/install-state.gz
+.next/
+out/
+build/
+
+# Testing
+coverage/
+
+# Production
+build/
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local environment files
 .env
-__pycache__
-venv/
+.env*.local
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Python
+.venv/
+__pycache__/
 instance/
